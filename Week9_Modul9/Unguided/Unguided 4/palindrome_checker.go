@@ -1,0 +1,62 @@
+package main
+
+import "fmt"
+
+const NMAX int = 127
+
+type tabel [NMAX]rune
+
+func isiArray(t *tabel, n *int) {
+	var input rune
+	*n = 0
+	for *n < NMAX {
+		fmt.Scanf("%c", &input)
+		if input == '.' {
+			break
+		}
+		if input != ' ' && input != '\n' && input != '\r' {
+			t[*n] = input
+			*n++
+		}
+	}
+}
+
+func cetakArray(t tabel, n int) {
+	for i := 0; i < n; i++ {
+		fmt.Printf("%c", t[i])
+	}
+	fmt.Println()
+}
+
+func balikanArray(t *tabel, n int) {
+	for i := 0; i < n/2; i++ {
+		t[i], t[n-1-i] = t[n-1-i], t[i]
+	}
+}
+
+func palindrom(t tabel, n int) bool {
+	var asli = t
+	balikanArray(&t, n)
+	for i := 0; i < n; i++ {
+		if asli[i] != t[i] {
+			return false
+		}
+	}
+	return true
+}
+
+func main() {
+	var tab tabel
+	var m int
+
+	fmt.Print("Hves : ")
+	isiArray(&tab, &m)
+
+	isPal := palindrom(tab, m)
+
+	fmt.Print("Rvvvusv tves : ")
+	balikanArray(&tab, m)
+	cetakArray(tab, m)
+
+	fmt.Printf("flalitauou : %t\n", isPal)
+}
